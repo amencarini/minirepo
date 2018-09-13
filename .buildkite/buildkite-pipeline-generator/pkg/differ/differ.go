@@ -7,24 +7,37 @@ import (
 )
 
 type Pipeline struct {
-	Steps []Step `yaml:"steps"`
+	Steps []interface{} `yaml:"steps"`
 }
 
-type Step struct {
+const wait = "wait"
+
+type CommandStep struct {
 	Label   string `yaml:"label"`
 	Command string `yaml:"command"`
-	// ArtifactPaths string `yaml:"artifact_paths"`
-	// Env           struct {
-	// 	BUILDKITEDOCKERCOMPOSECONTAINER string `yaml:"BUILDKITE_DOCKER_COMPOSE_CONTAINER"`
-	// } `yaml:"env"`
+}
+
+type BlockStep struct {
+	Block    string   `yaml:"block"`
+	Branches []string `yaml:"branches"`
 }
 
 func CalculateDiffingFolders() {
-	steps := []Step{}
-	steps = append(steps, Step{
+	steps := []interface{}{}
+	steps = append(steps, CommandStep{
 		Label:   ":hammer: Tests",
 		Command: "go test ./...",
 	})
+	steps = append(steps, wait)
+	steps = append(steps, BlockStep{
+		Block:    ":shipit: Deploy",
+		Branches: []string{"master"},
+	})
+	steps = append(steps, CommandStep{
+		Label:   ":kubernetes: Deploy",
+		Command: "echo 'all is good'",
+	})
+
 	pipeline := Pipeline{
 		Steps: steps,
 	}
