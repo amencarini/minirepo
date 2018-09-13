@@ -11,7 +11,7 @@ func TestSaysHelloWorld(t *testing.T) {
 	r := httptest.NewRequest("GET", "/", bytes.NewReader([]byte{}))
 	handler(w, r)
 	result := w.Body.String()
-	expected := "Hola mundo!"
+	expected := "¡Hola mundo!"
 	if result != expected {
 		t.Errorf("Expected %s, got %s", expected, result)
 	}
