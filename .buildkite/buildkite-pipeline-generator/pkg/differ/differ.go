@@ -23,7 +23,7 @@ func CalculateDiffingFolders() {
 	steps := []Step{}
 	steps = append(steps, Step{
 		Label:   ":hammer: Tests",
-		Command: "echo 'Teeests'",
+		Command: "go test ./...",
 	})
 	pipeline := Pipeline{
 		Steps: steps,
