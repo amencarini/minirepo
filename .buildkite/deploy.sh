@@ -1,5 +1,4 @@
 #!/bin/bash
-cd ..
 for dir in $( ls -d service.* ); do
   cd $dir
   binary=$(echo $dir | rev | cut -d '.' -f 1 | rev)
