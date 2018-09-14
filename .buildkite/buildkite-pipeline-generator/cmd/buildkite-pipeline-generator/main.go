@@ -1,7 +1,7 @@
 package main
 
-import "github.com/amencarini/minirepo/.buildkite/buildkite-pipeline-generator/pkg/differ"
+import "github.com/amencarini/minirepo/.buildkite/buildkite-pipeline-generator/pkg/pipeline"
 
 func main() {
-	differ.CalculateDiffingFolders()
+	pipeline.Generate()
 }

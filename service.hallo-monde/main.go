@@ -1,16 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
+	"time"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hallo monde!")
+func salutation() string {
+	return "Hallo monde!"
 }
 
 func main() {
-	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	for {
+		log.Printf(salutation())
+		time.Sleep(1 * time.Second)
+	}
 }

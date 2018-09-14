@@ -1,4 +1,4 @@
-package differ
+package pipeline
 
 import (
 	"fmt"
@@ -13,16 +13,17 @@ type Pipeline struct {
 const wait = "wait"
 
 type CommandStep struct {
-	Label   string `yaml:"label"`
-	Command string `yaml:"command"`
+	Label    string   `yaml:"label"`
+	Command  string   `yaml:"command"`
+	Branches []string `yaml:"branches,omitempty"`
 }
 
 type BlockStep struct {
 	Block    string   `yaml:"block"`
-	Branches []string `yaml:"branches"`
+	Branches []string `yaml:"branches,omitempty"`
 }
 
-func CalculateDiffingFolders() {
+func Generate() {
 	steps := []interface{}{}
 	steps = append(steps, CommandStep{
 		Label:   ":hammer: Tests",
@@ -34,8 +35,9 @@ func CalculateDiffingFolders() {
 		Branches: []string{"master"},
 	})
 	steps = append(steps, CommandStep{
-		Label:   ":kubernetes: Deploy",
-		Command: "echo 'all is good'",
+		Label:    ":kubernetes: Deploy",
+		Command:  ".buildkite/deploy.sh",
+		Branches: []string{"master"},
 	})
 
 	pipeline := Pipeline{
