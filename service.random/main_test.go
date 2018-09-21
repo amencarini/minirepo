@@ -6,7 +6,7 @@ import (
 
 func TestSaysHelloWorld(t *testing.T) {
 	result := salutation()
-	expected := "Baaaaaaah"
+	expected := "Baaaaaaah!"
 	if result != expected {
 		t.Errorf("Expected %s, got %s", expected, result)
 	}
